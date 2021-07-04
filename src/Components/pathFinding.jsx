@@ -31,15 +31,12 @@ class PathFinder extends Component {
 
     q.enqueue(startNode);
 
-    let count = 1;
     while (!q.isEmpty()) {
       let getQueueElement = q.dequeue();
 
       console.log(getQueueElement.row);
 
       for (let i = 0; i < 4; ++i) {
-        ++count;
-        //
         let X = getQueueElement.row + dRow[i],
           Y = getQueueElement.col + dCol[i];
 
@@ -54,7 +51,6 @@ class PathFinder extends Component {
           !gd[X][Y].isWall
         ) {
           if (X === final_x && Y === final_y) {
-            count = 0;
             console.log("Found Hurrahhhh");
             return;
           }
@@ -72,7 +68,6 @@ class PathFinder extends Component {
     }
 
     console.log("Not fount Alas!!!");
-    count = 0;
   };
 
   handleClick = (row, col) => {
@@ -114,6 +109,7 @@ class PathFinder extends Component {
     return (
       <>
         <button
+          style={{ marginLeft: 500 }}
           title="Do BFS"
           onClick={() =>
             this.dijkstra(
@@ -121,29 +117,34 @@ class PathFinder extends Component {
               this.state.Grids[FINISH_ROW][FINISH_COL]
             )
           }
-        />
+        >
+          Start Visualising
+        </button>
         <table style={{ marginLeft: 10, marginTop: 10 }}>
           {Grids.map((row, row_idx) => {
             return (
-              <tr style={{}} key={row_idx}>
-                {row.map((node, node_idx) => {
-                  const { row, col, isFinish, isStart, isWall, visited } = node;
-                  return (
-                    <td>
-                      <Grid
-                        key={node_idx}
-                        row={row}
-                        col={col}
-                        isFinish={isFinish}
-                        isStart={isStart}
-                        isWall={isWall}
-                        visited={visited}
-                        handleClick={() => this.handleClick(row, col)}
-                      ></Grid>
-                    </td>
-                  );
-                })}
-              </tr>
+              <tbody key={`tb-${row_idx}`}>
+                <tr style={{}} key={row_idx}>
+                  {row.map((node, node_idx) => {
+                    const { row, col, isFinish, isStart, isWall, visited } =
+                      node;
+                    return (
+                      <td key={`td-${row_idx}-${node_idx}`}>
+                        <Grid
+                          key={`${row_idx}-${node_idx}`}
+                          row={row}
+                          col={col}
+                          isFinish={isFinish}
+                          isStart={isStart}
+                          isWall={isWall}
+                          visited={visited}
+                          handleClick={() => this.handleClick(row, col)}
+                        ></Grid>
+                      </td>
+                    );
+                  })}
+                </tr>
+              </tbody>
             );
           })}
         </table>
