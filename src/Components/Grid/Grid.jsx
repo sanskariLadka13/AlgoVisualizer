@@ -7,7 +7,7 @@ class Grid extends Component {
   //alert(`${row} , ${col}`)
   render() {
     const { row, col, isStart, isFinish, isWall, visited, handleClick } =
-      this.props.params;
+      this.props;
     const cName = isStart
       ? `type-start`
       : isFinish
