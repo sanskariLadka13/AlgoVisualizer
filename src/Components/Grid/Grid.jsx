@@ -6,15 +6,25 @@ class Grid extends Component {
 
   //alert(`${row} , ${col}`)
   render() {
-    const { row, col, isStart, isFinish, isWall, visited, handleClick } =
-      this.props;
+    const {
+      row,
+      col,
+      isStart,
+      isFinish,
+      isWall,
+      handleClick,
+      isColored,
+      isPath,
+    } = this.props;
     const cName = isStart
       ? `type-start`
       : isFinish
       ? `type-finish`
       : isWall
       ? `type-wall`
-      : visited
+      : isPath
+      ? `type-path`
+      : isColored
       ? `type-visited`
       : `grid`;
 
